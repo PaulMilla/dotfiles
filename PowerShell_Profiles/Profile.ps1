@@ -15,8 +15,9 @@ if (($null -ne (Get-Command git -ErrorAction SilentlyContinue)) -and ($null -ne 
 ############
 
 # Make vim the default editor
-Set-Environment "EDITOR" "gvim --nofork"
-Set-Environment "GIT_EDITOR" $Env:EDITOR
+Set-Environment "EDITOR" "nvim-qt"
+# Set-Environment "GIT_EDITOR" $Env:EDITOR
+Set-Environment "PATH" "$Env:PATH;$(Join-Path $home "libs")"
 
 if (Test-Path "$home\libs\profile-extras.ps1") {
     . $home\libs\profile-extras.ps1
