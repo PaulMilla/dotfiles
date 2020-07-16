@@ -5,6 +5,7 @@
 # Source libs
 . $home\libs\profile-functions.ps1
 . $home\libs\profile-aliases.ps1
+. $home\libs\profile-work.ps1
 
 # 3rd-party imports
 if (($null -ne (Get-Command git -ErrorAction SilentlyContinue)) -and ($null -ne (Get-Module -ListAvailable Posh-Git -ErrorAction SilentlyContinue))) {
