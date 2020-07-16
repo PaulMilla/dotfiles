@@ -1,10 +1,7 @@
 {
-    "vscode-neovim.neovimPath": "C:\\tools\\neovim\\Neovim\\bin\\nvim.exe",
-    "vscode-neovim.useCtrlKeysForInsertMode": false,
-    "vscode-neovim.useCtrlKeysForNormalMode": false,
-    "vscode-neovim.highlightGroups.unknownHighlight": "vim",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "window.zoomLevel": 0,
-    "files.autoSave": "off"
+    "files.autoSave": "off",
+    "vim.useCtrlKeys": false
 }

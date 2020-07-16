@@ -11,11 +11,17 @@ if (($null -ne (Get-Command git -ErrorAction SilentlyContinue)) -and ($null -ne 
   Import-Module Posh-Git
 }
 
+# Enable vi mode via PSReadline
+if ((Get-Module -Name PSReadline).Count -eq 0) {
+  Install-Package -Name PSReadline -Force
+}
+Set-PSReadlineOption -EditMode vi
+
 # Exports
 ############
 
 # Make vim the default editor
-Set-Environment "EDITOR" "nvim-qt"
+Set-Environment "EDITOR" "code"
 # Set-Environment "GIT_EDITOR" $Env:EDITOR
 Set-Environment "PATH" "$Env:PATH;$(Join-Path $home "libs")"
 
