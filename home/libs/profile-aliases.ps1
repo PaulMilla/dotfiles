@@ -16,6 +16,11 @@ ${function:dl} = { Set-Location ~\Downloads }
 # Missing Bash aliases
 Set-Alias time Measure-Command
 
+if (Get-Command grep.exe -ErrorAction SilentlyContinue | Test-Path) {
+    Remove-Item alias:grep -ErrorAction SilentlyContinue
+    ${function:grep} = { grep.exe --binary-files=text -d skip --color=auto @args }
+}
+
 # Correct PowerShell Aliases if tools are available (aliases win if set)
 # WGet: Use `wget.exe` if available
 if (Get-Command wget.exe -ErrorAction SilentlyContinue | Test-Path) {
@@ -25,12 +30,12 @@ if (Get-Command wget.exe -ErrorAction SilentlyContinue | Test-Path) {
 # Directory Listing: Use `ls.exe` if available
 if (Get-Command ls.exe -ErrorAction SilentlyContinue | Test-Path) {
     Remove-Item alias:ls -ErrorAction SilentlyContinue
-    # Set `ls` to call `ls.exe` and always use --color
-    ${function:ls} = { ls.exe --color @args }
+    # Set `ls` to call `ls.exe`
+    ${function:ls} = { ls.exe @args }
     # List all files in long format
-    ${function:l} = { Get-ChildItem -lF @args }
+    ${function:l} = { ls.exe -lF @args }
     # List all files in long format, including hidden files
-    ${function:la} = { Get-ChildItem -laF @args }
+    ${function:la} = { ls.exe -laF @args }
     # List only directories
     ${function:lsd} = { Get-ChildItem -Directory -Force @args }
 } else {

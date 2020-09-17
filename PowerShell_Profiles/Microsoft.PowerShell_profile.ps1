@@ -4,6 +4,5 @@
 
 . $home\libs\profile-console.ps1
 
-
 ## TODO: Create profile for Visual Studio
 #. $home\libs\profile-visualstudio.ps1 

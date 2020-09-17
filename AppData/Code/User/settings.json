@@ -3,5 +3,6 @@
     "explorer.confirmDragAndDrop": false,
     "window.zoomLevel": 0,
     "files.autoSave": "off",
-    "vim.useCtrlKeys": false
+    "vim.useCtrlKeys": false,
+    "workbench.sideBar.location": "right"
 }

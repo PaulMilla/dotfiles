@@ -1,19 +1,27 @@
 ﻿[alias]
     # List current aliases
+    alias = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
     aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
     # View abbreviated SHA, description, and history graph of the latest 20 commits
     l = log --pretty=oneline -n 20 --graph --abbrev-commit
+    dog = log --decorate --oneline --graph -n 20
     # View the current working tree status using the short format
     s = status -s
     st = status -s
+    # View branch information
+    br = branch
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
     # `git di $number` shows the diff between the state `$number` revisions ago and the current state
     di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+    # Merge using vscode as the mergetool
+    mt = mergetool --tool=vscode
     # Pull in remote changes for the current repository and all its submodules
     p = !"git pull; git submodule foreach git pull origin master"
     # Clone a repository including all submodules
     c = clone --recursive
+    # Commit currently staged changes
+    ci = commit
     # Commit all changes
     ca = !git add -A && git commit -av
     # Switch to a branch, but don't create it
@@ -24,6 +32,13 @@
     tags = tag -l
     branches = branch -a
     remotes = remote -v
+    # Hide to ignore all changes to a file
+    hide = update-index --assume-unchanged
+    # Unhide to start tracking changes a file again
+    unhide = update-index --no-assume-unchanged
+    unhide-all = update-index --really-refresh
+    # View list of all 'hidden' files with ignored changes
+    hidden = !git ls-files -v | grep --color=auto '^h'
     # Credit an author on the latest commit
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
     # Interactive rebase with the given number of latest commits
@@ -40,6 +55,7 @@
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
     # Undo Commit; leaves files. Only for non-public commits
     uncommit = reset --soft HEAD^
+    unstage = reset HEAD --
 
 [apply]
     # Detect whitespace errors when applying a patch
@@ -60,6 +76,20 @@
     # https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
 
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+    # If we set a default merge tool then using the diff viewer in VS will instead try and open it in the merge tool
+    # Since I like using the VS merge tool when in VS, but VSCode when in CLI it's better to not set a default and
+    # instead set an alias for it
+    #tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+#[diff]
+    #tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
 [color]
     # Use colors in Git commands that are capable of colored output when
     # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
@@ -78,9 +108,6 @@
     changed = green
     untracked = cyan
     branch = magenta
-[merge]
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
 
 # URL shorthands
 [url "git@github.com:"]
@@ -101,3 +128,9 @@
 
 [credential]
     helper = manager
+[user]
+    name = Paul Milla
+    email = pamilla@microsoft.com
+[fetch]
+    # When doing a fetch or pull delete local branches that aren't on the server anymore
+    prune = true
