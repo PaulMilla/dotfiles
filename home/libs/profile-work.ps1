@@ -1,6 +1,7 @@
 # Work-Specific profile (currently @ Microsoft)
 
-${function:cd-Locations} = { cd "${env:INETROOT}\sources\dev\Calendar\src\Locations" }
+${function:cd-Locations} = { cd "C:\git\griffin\sources\dev\Calendar\src\Locations" }
+${function:cd-ADF} = { cd "C:\git\office.outlook.owa\Cosmos\ADF" }
 
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow
