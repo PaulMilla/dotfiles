@@ -6,12 +6,32 @@ function Mount-AppData() {
     ## Typically stored under the user's AppData Directory in Windows, but might not always be the case
     ## We'll install each app explicitly and define the path for windows, osx, and linux
 
+    ## Best guess at different appData locations across different OS
+    $appData_roaming = if ($IsLinux) { Get-Item "$home/.config/" } `
+                      elseif ($IsMacOS) { Get-Item "$home/Library/Application Support/" } `
+                      else { Get-Item $env:APPDATA }
+
+    $appData_local = if ($IsLinux) { Get-Item "$home/.config/" } `
+                      elseif ($IsMacOS) { Get-Item "$home/Library/Application Support/" } `
+                      else { Get-Item "$env:APPDATA\..\Local" }
+
     ## Visual Studio Code
     ## https://vscode.readthedocs.io/en/latest/getstarted/settings/#settings-file-locations
-    $appData_vscode = if ($IsLinux) { "$home/.config/" } `
-                      elseif ($IsMacOS) { "$home/Library/Application Support/" } `
-                      else { $env:APPDATA }
-    Copy-Item .\Code -Recurse -Force -Destination $appData_vscode
+    New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\keybindings.json" -Target "$PSScriptRoot\Code\User\keybindings.json"
+    New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\settings.json" -Target "$PSScriptRoot\Code\User\settings.json"
+
+    ## ConEmu
+    New-Item -ItemType HardLink -Force -Path "$appData_roaming\ConEmu.xml" -Target "$PSScriptRoot\ConEmu\ConEmu.xml"
+
+    ## FreeCommander
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.fav.xml"   -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.fav.xml"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.find.ini"  -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.find.ini"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.ftp.ini"   -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.ftp.ini"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.ini"       -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.ini"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.shc"       -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.shc"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.views.ini" -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.views.ini"
+    New-Item -ItemType HardLink -Force -Path "$appData_local\FreeCommanderXE\Settings\FreeCommander.wcx.ini"   -Target "$PSScriptRoot\FreeCommanderXE\Settings\FreeCommander.wcx.ini"
+    New-Item -ItemType SymbolicLink -Force -Path "$appData_local\FreeCommanderXE\Settings\ColorSchemes"        -Target "$PSScriptRoot\FreeCommanderXE\Settings\ColorSchemes"
 }
 
 # Created function so as to not pollute global namespace
