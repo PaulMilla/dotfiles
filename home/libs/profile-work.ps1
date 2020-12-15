@@ -25,7 +25,7 @@ function Get-SubstrateAppToken([Parameter(Mandatory=$true)]$ipAddress) {
         $adminCred = Get-Credential -Credential Administrator
         $global:adminCred = $adminCred
     }
-    Invoke-Command -ComputerName $ipAddress -Credential $adminCred -Authentication CredSSP -ScriptBlock { & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AzureAD AppToken -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -Grants "Locations-Internal.ReadWrite","Place.ReadWrite.All" -TokenState PreTransform }
+    Invoke-Command -ComputerName $ipAddress -Credential $adminCred -Authentication CredSSP -ScriptBlock { & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AzureAD AppToken -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" -TokenState PreTransform }
 }
 
 function Get-SubstrateUserToken([Parameter(Mandatory=$true)]$ipAddress) {
@@ -38,7 +38,7 @@ function Get-SubstrateUserToken([Parameter(Mandatory=$true)]$ipAddress) {
         Add-PSSnapin *2010;
         $org = Get-Organization |  Where {$_.Name -like "griffin*"} | Select -First 1;
         $smtp = Get-Mailbox -Organization $org | Where { $_.Name -like "Admin*"} | Select -First 1 -ExpandProperty PrimarySmtpAddress;
-        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -AzureAD UserToken -TokenState PreTransform -Grants "Locations-Internal.ReadWrite","Place.ReadWrite.All" -SmtpAddress $smtp
+        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -AzureAD UserToken -TokenState PreTransform -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" -SmtpAddress $smtp
     }
 }
 
@@ -46,3 +46,7 @@ function DeployDll-CalendarLocations([Parameter(Mandatory=$true)]$tdsIp) {
     Copy-Item "${env:INETROOT}\target\dev\calendar\Microsoft.O365.Calendar.Locations\debug\amd64\Microsoft.O365.Calendar.Locations.*" `
               "\\$tdsIp\D$\MicroService\Locations\bin" -Exclude *.config
 }
+
+# function DeployResources-OutlookAnalysis() {
+
+# }
