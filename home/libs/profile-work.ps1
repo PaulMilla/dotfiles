@@ -2,6 +2,8 @@
 
 ${function:cd-Locations} = { cd "C:\git\griffin\sources\dev\Calendar\src\Locations" }
 ${function:cd-ADF} = { cd "C:\git\office.outlook.owa\Cosmos\ADF" }
+${function:cd-Git} = { cd "C:\git" }
+${function:cd-Experimentation} = { cd "C:\git\CTExperimentation" }
 
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow

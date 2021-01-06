@@ -1,6 +1,6 @@
 function Mount-DotFiles() {
-    ## PowerShell 5.X and below was windows-only and had its profile under WindowsPowerShell
-    ## PowerShell 6.X (core) and above changed profile dir to be just PowerShell
+    ## PowerShell 5.X and below was windows-only and had its profile under 'WindowsPowerShell'
+    ## PowerShell 6.X (core) and above changed profile dir to be just 'PowerShell'
     $profileDir = Split-Path -Parent (Split-Path -Parent $profile)
     $profileDir_ps5 = Join-Path $profileDir "WindowsPowerShell"
     $profileDir_ps6 = Join-Path $profileDir "PowerShell"

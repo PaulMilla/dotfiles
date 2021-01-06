@@ -4,5 +4,7 @@
     "window.zoomLevel": 0,
     "files.autoSave": "off",
     "vim.useCtrlKeys": false,
-    "workbench.sideBar.location": "right"
+    "workbench.sideBar.location": "right",
+    "git.autofetch": true,
+    "git.enableSmartCommit": true
 }
