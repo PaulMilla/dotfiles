@@ -8,7 +8,7 @@ function powerline() {
     # so instead we'll define our prompt in this `powerline` function to be applied whenever it's safe to do so
     Import-Module Posh-Git
     Import-Module Oh-My-Posh
-    Set-Theme Paradox
+    Set-PoshPrompt -Theme Paradox
 }
 
 function Connect-TDS([Parameter(Mandatory=$true)]$ipAddress) {
