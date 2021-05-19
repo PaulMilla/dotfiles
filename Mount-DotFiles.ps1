@@ -1,3 +1,36 @@
+# Check if we're running in a window with Administrator privileges - needed to make hard links
+# If not then create a new window and execute
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+  # Relaunch as an elevated process:
+  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+  exit
+}
+
+function Mount-HomeDir($dstDir) {
+    # TODO: These 2 functions could definitely be merged, but this works for now
+    $files_src = Get-ChildItem -Recurse -File "$PSScriptRoot\home"
+    $files_map = $files_src | Resolve-Path -Relative |% { @{ src = $_; dst = (Join-Path -Path $dstDir -ChildPath ($_ -replace "^.[\\\/]home[\\\/]","")) } }
+
+    foreach ($file in $files_map) {
+        $src = $file.src
+        $dst = $file.dst
+        New-Item -ItemType HardLink -Force -Path $src -Target $dst
+    }
+}
+
+function Mount-PowerShellProfiles($dstDir) {
+    # TODO: These 2 functions could definitely be merged, but this works for now
+    $files_src = Get-ChildItem -Recurse -File "$PSScriptRoot\PowerShell_Profiles"
+    $files_map = $files_src | Resolve-Path -Relative |% { @{ src = $_; dst = (Join-Path -Path $dstDir -ChildPath ($_ -replace "^.[\\\/]PowerShell_Profiles[\\\/]","")) } }
+
+    foreach ($file in $files_map) {
+        $src = $file.src
+        $dst = $file.dst
+        New-Item -ItemType HardLink -Force -Path $src -Target $dst
+    }
+}
+
 function Mount-DotFiles() {
     ## PowerShell 5.X and below was windows-only and had its profile under 'WindowsPowerShell'
     ## PowerShell 6.X (core) and above changed profile dir to be just 'PowerShell'
@@ -5,17 +38,23 @@ function Mount-DotFiles() {
     $profileDir_ps5 = Join-Path $profileDir "WindowsPowerShell"
     $profileDir_ps6 = Join-Path $profileDir "PowerShell"
 
-    New-Item $profileDir_ps5 -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
-    New-Item $profileDir_ps6 -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+    Write-Host -ForegroundColor Yellow "Linking AppData directory..."
+    & "$PSScriptRoot\AppData\Mount-AppData.ps1"
 
-    Copy-Item ".\home\**" -Recurse -Force -Destination $home
-    Copy-Item ".\PowerShell_Profiles\**" -Destination $profileDir_ps5
-    Copy-Item ".\PowerShell_Profiles\**" -Destination $profileDir_ps6
+    Write-Host -ForegroundColor Yellow "`nLinking user home directory..."
+    Mount-HomeDir -dstDir $HOME
 
-    & .\AppData\Mount-AppData.ps1
+    Write-Host -ForegroundColor Yellow "`nLinking PowerShell 5.X profiles..."
+    Mount-PowerShellProfiles -dstDir $profileDir_ps5
+
+    Write-Host -ForegroundColor Yellow "`nLinking PowerShell 6.X (core) profiles..."
+    Mount-PowerShellProfiles -dstDir $profileDir_ps6
 }
 
 # Created function so as to not pollute global namespace
 Push-Location $PSScriptRoot
 Mount-DotFiles
 Pop-Location
+
+Write-Host "Press any key to exit..."
+$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
