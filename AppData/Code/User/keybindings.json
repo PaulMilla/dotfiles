@@ -25,6 +25,8 @@
 
     // Add our own keybindings
     //////////////////////////
+
+    // Get browser-like tab navigation
     {
         "key": "ctrl+tab",
         "command": "workbench.action.nextEditorInGroup"
@@ -33,4 +35,22 @@
         "key": "ctrl+shift+tab",
         "command": "workbench.action.previousEditorInGroup"
     },
+
+    // Use Ctrl+hjkl to navigate between windows (similar to vim)
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown"
+    }
 ]

@@ -1,10 +1,20 @@
 {
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "window.zoomLevel": 0,
     "files.autoSave": "off",
     "vim.useCtrlKeys": false,
     "workbench.sideBar.location": "right",
     "git.autofetch": true,
-    "git.enableSmartCommit": true
+    "git.enableSmartCommit": true,
+    "editor.fontFamily": "Hack NF",
+    "editor.fontLigatures": true,
+    "powershell.powerShellDefaultVersion": "Windows PowerShell (x86)",
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "always"
 }

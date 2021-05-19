@@ -13,7 +13,18 @@ function powerline() {
     Set-PoshPrompt -Theme Paradox
 }
 
-function Connect-TDS([Parameter(Mandatory=$true)]$ipAddress) {
+function TDS-NewSession([Parameter(Mandatory=$true)]$ipAddress) {
+    # Might need to have PS setup, especially if using CredSSP auth
+    ## $ winrm quickconfig
+    ## $ Enable-WSManCredSSP -Role client -DelegateComputer * -Force
+    if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
+        $adminCred = Get-Credential -Credential Administrator
+        $global:adminCred = $adminCred
+    }
+    return New-PSSession -Credential $adminCred -Authentication CredSSP -ComputerName $ipAddress 
+}
+
+function TDS-Connect([Parameter(Mandatory=$true)]$ipAddress) {
     if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
         $adminCred = Get-Credential -Credential Administrator
         $global:adminCred = $adminCred
@@ -50,5 +61,39 @@ function DeployDll-CalendarLocations([Parameter(Mandatory=$true)]$tdsIp) {
 }
 
 # function DeployResources-OutlookAnalysis() {
-
 # }
+
+
+function DeployAutoPilot-CalendarMetadataUploader([Parameter(Mandatory=$true)]$tdsIp) {
+    $session = TDS-NewSession -ipAddress $tdsIp
+
+    ## Zip CMU Autopilot, copy to TDS, and unzip
+    Write-Host -Foreground Green "Prepping autopilot files for transfer..."
+    Compress-Archive -Path "${env:INETROOT}\target\distrib\product\all\debug\amd64\CalendarMetadataUploaderAutoPilot\CalendarMetadataUploader\*" `
+                     -DestinationPath "${env:TEMP}\CalendarMetadataUploaderAutoPilot.zip" -Force
+    Copy-Item "${env:TEMP}\CalendarMetadataUploaderAutoPilot.zip" `
+              "D:\AutoPilots\CalendarMetadataUploaderAutoPilot.zip" -Force -ToSession $session
+    Invoke-Command -Session $session -ScriptBlock {
+        Expand-Archive -Path "D:\AutoPilots\CalendarMetadataUploaderAutoPilot.zip" `
+                       -DestinationPath "D:\AutoPilots\CalendarMetadataUploader" -Force
+    } | Write-Host
+
+    # Run start.bat on TDS
+    Write-Host -Foreground Green "Running start.bat..."
+    Invoke-Command -Session $session -ScriptBlock {
+        Push-Location -Path "D:\AutoPilots\CalendarMetadataUploader"
+        & cmd /c start.bat
+    } | Write-Host
+
+    # Restart IIS & Services
+    Write-Host -Foreground Green "Restarting IIS and Services..."
+    Invoke-Command -Session $session -ScriptBlock {
+        iisreset
+        Restart-Service MsExchangeMailboxAssistants
+    } | Write-Host
+}
+
+function DeployDll-CalendarMetadataUploader([Parameter(Mandatory=$true)]$tdsIp) {
+    Copy-Item "${env:INETROOT}\target\dev\calendar\Microsoft.O365.Calendar.Locations\debug\amd64\Microsoft.O365.Calendar.Locations.*" `
+              "\\$tdsIp\D$\MicroService\Locations\bin" -Exclude *.config
+}
