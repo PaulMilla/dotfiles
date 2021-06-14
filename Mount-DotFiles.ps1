@@ -15,7 +15,7 @@ function Mount-HomeDir($dstDir) {
     foreach ($file in $files_map) {
         $src = $file.src
         $dst = $file.dst
-        New-Item -ItemType HardLink -Force -Path $src -Target $dst
+        New-Item -ItemType HardLink -Force -Path $dst -Target $src
     }
 }
 
@@ -27,7 +27,7 @@ function Mount-PowerShellProfiles($dstDir) {
     foreach ($file in $files_map) {
         $src = $file.src
         $dst = $file.dst
-        New-Item -ItemType HardLink -Force -Path $src -Target $dst
+        New-Item -ItemType HardLink -Force -Path $dst -Target $src
     }
 }
 

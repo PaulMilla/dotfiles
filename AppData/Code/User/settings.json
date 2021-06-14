@@ -10,11 +10,8 @@
     "editor.fontLigatures": true,
     "powershell.powerShellDefaultVersion": "Windows PowerShell (x86)",
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
     "javascript.updateImportsOnFileMove.enabled": "always"
 }
