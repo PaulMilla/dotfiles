@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2021-06-14 10:13:38" build="210314">
+		<key name=".Vanilla" modified="2021-06-28 15:37:29" build="210627">
 			<value name="Language" type="string" data="en"/>
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
@@ -84,6 +84,9 @@
 			<value name="SaveCmdHistory" type="hex" data="01"/>
 			<value name="CmdLineHistory" type="multi">
 				<line data="{Shells::PowerShell (Admin)}"/>
+				<line data="{Shells::PowerShell}"/>
+				<line data="{Developer Console VS2019}"/>
+				<line data="{SDK::VS 2019 x64 tools prompt}"/>
 				<line data="powershell.exe"/>
 			</value>
 			<value name="SingleInstance" type="hex" data="01"/>
@@ -141,11 +144,11 @@
 			<value name="Cascaded" type="hex" data="01"/>
 			<value name="IntegralSize" type="hex" data="00"/>
 			<value name="WindowMode" type="dword" data="0000051f"/>
-			<value name="ConWnd X" type="long" data="187"/>
+			<value name="ConWnd X" type="long" data="74"/>
 			<value name="ConWnd Y" type="long" data="0"/>
-			<value name="LastMonitor" type="string" data="0,0,2560,1410"/>
-			<value name="ConWnd Width" type="dword" data="00000110"/>
-			<value name="ConWnd Height" type="dword" data="0000002b"/>
+			<value name="LastMonitor" type="string" data="0,0,3000,1920"/>
+			<value name="ConWnd Width" type="dword" data="000000a7"/>
+			<value name="ConWnd Height" type="dword" data="00000019"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="QuakeStyle" type="hex" data="01"/>
 			<value name="Restore2ActiveMon" type="hex" data="00"/>
@@ -606,8 +609,8 @@
 				<value name="DndRKey" type="hex" data="A2"/>
 				<value name="WndDragKey" type="dword" data="00121101"/>
 			</key>
-			<key name="Tasks" modified="2020-12-15 11:42:10" build="201011">
-				<value name="Count" type="long" data="23"/>
+			<key name="Tasks" modified="2021-06-21 17:40:04" build="210422">
+				<value name="Count" type="long" data="24"/>
 				<key name="Task1" modified="2020-12-15 11:42:10" build="201011">
 					<value name="Name" type="string" data="{Far Manager::Far 3.0.5577 x64 (1)}"/>
 					<value name="Flags" type="dword" data="00000004"/>
@@ -815,6 +818,15 @@
 					<value name="Active" type="long" data="0"/>
 					<value name="Count" type="long" data="1"/>
 					<value name="Cmd1" type="string" data='cmd /k ""%ConEmuDrive%\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"" x64 -new_console:t:"VS 2019" -new_console:C:"%CommonProgramFiles(x86)%\microsoft shared\MSEnv\VSFileHandler.dll"'/>
+				</key>
+				<key name="Task24" modified="2021-06-21 17:40:04" build="210422">
+					<value name="Name" type="string" data="{Developer Console VS2019}"/>
+					<value name="Flags" type="dword" data="00000004"/>
+					<value name="Hotkey" type="dword" data="00000000"/>
+					<value name="GuiArgs" type="string" data=""/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
+					<value name="Cmd1" type="string" data='cmd.exe /k "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -new_console:a'/>
 				</key>
 			</key>
 			<key name="Apps" modified="2020-12-15 11:42:10" build="201011">
