@@ -1,9 +1,13 @@
 # Work-Specific profile (currently @ Microsoft)
 
+Import-Module -DisableNameChecking -Name $PSScriptRoot\scripts\lib-TDS.psm1
+Import-Module -DisableNameChecking -Name $PSScriptRoot\scripts\lib-CMU.psm1
+
 ${function:cd-Locations} = { cd "C:\git\griffin\sources\dev\Calendar\src\Locations" }
 ${function:cd-ADF} = { cd "C:\git\office.outlook.owa\Cosmos\ADF" }
 ${function:cd-Git} = { cd "C:\git" }
 ${function:cd-Experimentation} = { cd "C:\git\CTExperimentation" }
+${function:cd-CMU} = { cd "C:\git\O365Core\OlkDataApps\sources\dev\CalendarMetadataUploaderV2" }
 
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow
@@ -13,46 +17,36 @@ function powerline() {
     Set-PoshPrompt -Theme Paradox
 }
 
-function TDS-NewSession([Parameter(Mandatory=$true)]$ipAddress) {
-    # Might need to have PS setup, especially if using CredSSP auth
-    ## $ winrm quickconfig
-    ## $ Enable-WSManCredSSP -Role client -DelegateComputer * -Force
-    if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $adminCred = Get-Credential -Credential Administrator
-        $global:adminCred = $adminCred
-    }
-    return New-PSSession -Credential $adminCred -Authentication CredSSP -ComputerName $ipAddress 
-}
-
-function TDS-Connect([Parameter(Mandatory=$true)]$ipAddress) {
-    if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $adminCred = Get-Credential -Credential Administrator
-        $global:adminCred = $adminCred
-    }
-    Write-Host "Reminder: To use Exchange Commands load them in via: Add-PSSnapin *2010"
-    Enter-PSSession -Credential $adminCred -Authentication CredSSP -ComputerName $ipAddress 
-}
-
 function Get-SubstrateAppToken([Parameter(Mandatory=$true)]$ipAddress) {
     if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $adminCred = Get-Credential -Credential Administrator
-        $global:adminCred = $adminCred
+        $global:adminCred = Get-Credential -Credential Administrator
     }
-    Invoke-Command -ComputerName $ipAddress -Credential $adminCred -Authentication CredSSP -ScriptBlock { & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AzureAD AppToken -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" -TokenState PreTransform }
+    
+    Invoke-Command -ComputerName $ipAddress -Credential $global:adminCred -Authentication CredSSP -ScriptBlock {
+        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
+            -AzureAD AppToken `
+            -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" `
+            -TokenState PreTransform `
+            -Grants "Calendar.Read","Calendars.Read","Calendars.ReadWrite","Calendars-Internal.Read","MailboxSettings.Read","ScheduledWork.Create","ScheduledWork.Delete","ScheduledWork.Read","SDS-Internal.ReadWrite.All","User.Read"
+    }
 }
 
 function Get-SubstrateUserToken([Parameter(Mandatory=$true)]$ipAddress) {
     if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $adminCred = Get-Credential -Credential Administrator
-        $global:adminCred = $adminCred
+        $global:adminCred = Get-Credential -Credential Administrator
     }
 
-    Invoke-Command -ComputerName $ipAddress -Credential $adminCred -Authentication CredSSP -ScriptBlock {
+    Invoke-Command -ComputerName $ipAddress -Credential $global:adminCred -Authentication CredSSP -ScriptBlock {
         Add-PSSnapin *2010;
         $org = Get-Organization |  Where {$_.Name -like "griffin*"} | Select -First 1;
         $smtp = Get-Mailbox -Organization $org | Where { $_.Name -like "Admin*"} | Select -First 1 -ExpandProperty PrimarySmtpAddress;
-        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" -AzureAD UserToken -TokenState PreTransform -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" -SmtpAddress $smtp
-    }
+        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
+            -AzureAD UserToken `
+            -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" `
+            -TokenState PreTransform `
+            -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" `
+            -SmtpAddress $smtp
+    } | Write-Host
 }
 
 function DeployDll-CalendarLocations([Parameter(Mandatory=$true)]$tdsIp) {
@@ -60,12 +54,8 @@ function DeployDll-CalendarLocations([Parameter(Mandatory=$true)]$tdsIp) {
               "\\$tdsIp\D$\MicroService\Locations\bin" -Exclude *.config
 }
 
-# function DeployResources-OutlookAnalysis() {
-# }
-
-
 function DeployAutoPilot-CalendarMetadataUploader([Parameter(Mandatory=$true)]$tdsIp) {
-    $session = TDS-NewSession -ipAddress $tdsIp
+    $session = TDS-GetSession $tdsIp
 
     ## Zip CMU Autopilot, copy to TDS, and unzip
     Write-Host -Foreground Green "Prepping autopilot files for transfer..."
@@ -91,9 +81,4 @@ function DeployAutoPilot-CalendarMetadataUploader([Parameter(Mandatory=$true)]$t
         iisreset
         Restart-Service MsExchangeMailboxAssistants
     } | Write-Host
-}
-
-function DeployDll-CalendarMetadataUploader([Parameter(Mandatory=$true)]$tdsIp) {
-    Copy-Item "${env:INETROOT}\target\dev\calendar\Microsoft.O365.Calendar.Locations\debug\amd64\Microsoft.O365.Calendar.Locations.*" `
-              "\\$tdsIp\D$\MicroService\Locations\bin" -Exclude *.config
 }
