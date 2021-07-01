@@ -18,11 +18,8 @@ function powerline() {
 }
 
 function Get-SubstrateAppToken([Parameter(Mandatory=$true)]$ipAddress) {
-    if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $global:adminCred = Get-Credential -Credential Administrator
-    }
-    
-    Invoke-Command -ComputerName $ipAddress -Credential $global:adminCred -Authentication CredSSP -ScriptBlock {
+    $session = TDS-GetSession -tdsIp $ipAddress
+    Invoke-Command -Session $session -ScriptBlock {
         & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
             -AzureAD AppToken `
             -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" `
@@ -32,11 +29,8 @@ function Get-SubstrateAppToken([Parameter(Mandatory=$true)]$ipAddress) {
 }
 
 function Get-SubstrateUserToken([Parameter(Mandatory=$true)]$ipAddress) {
-    if (!(Test-Path variable:adminCred) -and !(Test-Path variable:global:adminCred)) {
-        $global:adminCred = Get-Credential -Credential Administrator
-    }
-
-    Invoke-Command -ComputerName $ipAddress -Credential $global:adminCred -Authentication CredSSP -ScriptBlock {
+    $session = TDS-GetSession -tdsIp $ipAddress
+    Invoke-Command -Session $session -ScriptBlock {
         Add-PSSnapin *2010;
         $org = Get-Organization |  Where {$_.Name -like "griffin*"} | Select -First 1;
         $smtp = Get-Mailbox -Organization $org | Where { $_.Name -like "Admin*"} | Select -First 1 -ExpandProperty PrimarySmtpAddress;
