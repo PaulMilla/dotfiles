@@ -1,18 +1,21 @@
 <#
 .SYNOPSIS
-Short description
+Gets or creates a PSSession to target TDS
 
 .DESCRIPTION
-Long description
+Utilizes a custom global variable 'tdsDict' to store sessions for different TDS machines.
+If we have never connected to the TDS machine before we establish a new connection for it.
+If we have established a previous connection return that session information instead.
 
 .PARAMETER tdsIp
-Parameter description
+The IP Address of the TDS to connect to
 
 .EXAMPLE
-An example
+TDS-GetSession -tdsIp 10.231.237.170
 
 .NOTES
-General notes
+PowerShell global variables only exist within the context of the window. Closing the current
+window or opening a new one results in a blank slate.
 #>
 function TDS-GetSession([Parameter(Mandatory=$true)]$tdsIp) {
     # Might need to have PS setup, especially if using CredSSP auth
