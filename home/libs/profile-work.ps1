@@ -17,32 +17,6 @@ function powerline() {
     Set-PoshPrompt -Theme Paradox
 }
 
-function Get-SubstrateAppToken([Parameter(Mandatory=$true)]$ipAddress) {
-    $session = TDS-GetSession -tdsIp $ipAddress
-    Invoke-Command -Session $session -ScriptBlock {
-        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
-            -AzureAD AppToken `
-            -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" `
-            -TokenState PreTransform `
-            -Grants "Calendar.Read","Calendars.Read","Calendars.ReadWrite","Calendars-Internal.Read","MailboxSettings.Read","ScheduledWork.Create","ScheduledWork.Delete","ScheduledWork.Read","SDS-Internal.ReadWrite.All","User.Read"
-    }
-}
-
-function Get-SubstrateUserToken([Parameter(Mandatory=$true)]$ipAddress) {
-    $session = TDS-GetSession -tdsIp $ipAddress
-    Invoke-Command -Session $session -ScriptBlock {
-        Add-PSSnapin *2010;
-        $org = Get-Organization |  Where {$_.Name -like "griffin*"} | Select -First 1;
-        $smtp = Get-Mailbox -Organization $org | Where { $_.Name -like "Admin*"} | Select -First 1 -ExpandProperty PrimarySmtpAddress;
-        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
-            -AzureAD UserToken `
-            -AppId "9bdb0045-3587-47f9-863a-2ca58d11e2e8" `
-            -TokenState PreTransform `
-            -Grants "Locations-Internal.ReadWrite","Place.Read.All","Place.ReadWrite.All" `
-            -SmtpAddress $smtp
-    } | Write-Host
-}
-
 function DeployDll-CalendarLocations([Parameter(Mandatory=$true)]$tdsIp) {
     Copy-Item "${env:INETROOT}\target\dev\calendar\Microsoft.O365.Calendar.Locations\debug\amd64\Microsoft.O365.Calendar.Locations.*" `
               "\\$tdsIp\D$\MicroService\Locations\bin" -Exclude *.config

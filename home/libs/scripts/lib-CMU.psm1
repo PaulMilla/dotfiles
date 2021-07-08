@@ -102,9 +102,49 @@ function CMU-ProcessMailbox
         #>
 
         # "Logs in" a user if we haven't already done so manually
-        Test-MAPIConnectivity -Identity $using:targetMailbox
+        Test-MAPIConnectivity -Identity $using:targetMailbox | Out-Null
         # Causes the Griffin MailboxAssitant to send a MailboxProcessor notification to our app for the target mailbox
         Start-MailboxAssistant -AssistantName CalendarMetadataUploaderV2TimeBasedProcessor -Identity $using:targetMailbox
+    } | Write-Host
+}
+
+function CMU-GenerateUserToken
+{
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$tdsIp,
+        [string]$smtp
+    )
+
+    $session = TDS-GetSession $tdsIp
+    Invoke-Command -Session $session -ScriptBlock {
+        Add-PSSnapin *2010
+        $smtp = $using:smtp
+        if($null -eq $smtp) {
+            $org = Get-Organization |? {$_.Name -like "griffin*"} | Select -First 1;
+            $smtp = Get-Mailbox -Organization $org |? { $_.Name -like "Admin*"} | Select -First 1 -ExpandProperty PrimarySmtpAddress;
+        }
+        # From CalendarMetadataUploaderV2.settings.ini
+        $cmuAppId = "e7762c80-392b-4278-80fa-a8fda80b129c"
+        $permissions = @(
+            "Calendar.Read",
+            "Calendars.Read",
+            "Calendars.ReadWrite",
+            "Calendars-Internal.Read",
+            "MailboxSettings.Read",
+            "ScheduledWork.Create",
+            "ScheduledWork.Delete",
+            "ScheduledWork.Read", 
+            "SDS-Internal.ReadWrite.All",
+            "User.Read",
+            "Privilege.AllowPrivateBehaviors"
+        )
+
+        & "C:\Program Files\Microsoft\Exchange Test\Security\SubstrateTestTokenTool\New-SubstrateTestToken.ps1" `
+            -AzureAD UserToken `
+            -SmtpAddress $smtp `
+            -AppId $cmuAppId `
+            -Grants $permissions
     } | Write-Host
 }
 

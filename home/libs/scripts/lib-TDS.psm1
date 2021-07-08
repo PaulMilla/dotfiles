@@ -25,6 +25,12 @@ function TDS-GetSession([Parameter(Mandatory=$true)]$tdsIp) {
         $global:tdsDict = @{}
     }
 
+    if ($global:tdsDict.ContainsKey($tdsIp) -and ($global:tdsDict[$tdsIp].State -ne "Opened"))
+    {
+        $state = $global:tdsDict[$tdsIp].State
+        Write-Host "TDS session to $tdsIp is '$state'. Removing from cached sessions"
+        $global:tdsDict.Remove($tdsIp);
+    }
     if (!($global:tdsDict.ContainsKey($tdsIp))) {
         Write-Host "tdsIp not found. Creating new entry. Please provide password..."
         $adminCred = Get-Credential -Credential Administrator
