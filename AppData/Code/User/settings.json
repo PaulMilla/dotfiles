@@ -14,5 +14,6 @@
         "*.ipynb": "jupyter.notebook.ipynb"
     },
     "javascript.updateImportsOnFileMove.enabled": "always",
-    "security.workspace.trust.untrustedFiles": "open"
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.confirmSync": false
 }

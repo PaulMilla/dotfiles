@@ -52,5 +52,10 @@
     {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "ctrl+alt+down",
+        "command": "-extension.vim_cmd+alt+down",
+        "when": "editorTextFocus && vim.active && !inDebugRepl"
     }
 ]
