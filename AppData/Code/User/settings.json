@@ -11,9 +11,15 @@
     "powershell.powerShellDefaultVersion": "Windows PowerShell (x86)",
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
     "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
+        "*.ipynb": "jupyter-notebook"
     },
     "javascript.updateImportsOnFileMove.enabled": "always",
     "security.workspace.trust.untrustedFiles": "open",
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "debug.javascript.autoAttachFilter": "smart",
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    }
 }
