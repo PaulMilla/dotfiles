@@ -1,14 +1,14 @@
 # Work-Specific profile (currently @ Microsoft)
 
-Import-Module -Force -DisableNameChecking -Name G:\PowerShell-Libs\src\lib-TDS.psm1
-Import-Module -Force -DisableNameChecking -Name G:\PowerShell-Libs\src\lib-CMU.psm1 -ArgumentList @("G:\OlkDataApps")
-Import-Module -Force -DisableNameChecking -Name G:\PowerShell-Libs\src\lib-Cosmos.psm1
+$gitDir = "C:\git"
+Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-TDS.psm1"
+Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-CMU.psm1" -ArgumentList @("$gitDir\OlkDataApps")
+Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-Cosmos.psm1"
 
-${function:cd-Locations} = { cd "C:\git\griffin\sources\dev\Calendar\src\Locations" }
-${function:cd-ADF} = { cd "C:\git\office.outlook.owa\Cosmos\ADF" }
-${function:cd-Git} = { cd "C:\git" }
-${function:cd-Experimentation} = { cd "C:\git\CTExperimentation" }
-${function:cd-OutlookML} = { cd "C:\git\TEE\TEEGit\Offline\OutlookML\Onboarding\python"; $user = "pamilla";  Write-Host "To activate environment: conda activate outlookml" }
+${function:cd-Git} = { cd "$gitDir" }
+${function:cd-Experimentation} = { cd "$gitDir\CTExperimentation" }
+${function:cd-CMU} = { cd "$gitDir\OlkDataApps\sources\dev\CalendarMetadataUploaderV2" }
+${function:cd-OutlookML} = { cd "$gitDir\TEE\TEEGit\Offline\OutlookML\Onboarding\python"; $user = "pamilla";  Write-Host "To activate environment: conda activate outlookml" }
 
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow
@@ -17,3 +17,4 @@ function powerline() {
     Import-Module Oh-My-Posh
     Set-PoshPrompt -Theme Paradox
 }
+powerline
