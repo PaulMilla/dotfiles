@@ -4,6 +4,16 @@
 
 A collection of dotfiles for configuration and settings for various apps/tools.
 
+Since this has a submodule you should clone with the --recursive flag
+
+```bash
+# HTTPS auth
+git clone --recursive https://github.com/PaulMilla/dotfiles.git
+
+# SSH auth
+git clone --recursive git@github.com:PaulMilla/dotfiles.git
+```
+
 The master branch holds the most generic and cross-platform settings while long-lived branches hold more OS-specific settings.
 
 To install from PowerShell:
