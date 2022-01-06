@@ -3,7 +3,10 @@
 # ===========
 
 if (Test-Path "$home\libs\profile-console.ps1") {
+  # For some reason this is only working on Core now?
+  if ($PSVersionTable.PSEdition -eq "Core") {
     . $home\libs\profile-console.ps1
+  }
 }
 
 ## TODO: Create profile for Visual Studio
