@@ -1,4 +1,4 @@
-[alias]
+﻿[alias]
     # List current aliases
     alias = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
     aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
@@ -57,6 +57,7 @@
     uncommit = reset --soft HEAD^
     unstage = reset HEAD --
 
+	root = rev-parse --show-toplevel
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = warn
