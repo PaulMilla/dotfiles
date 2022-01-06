@@ -13,7 +13,7 @@ function Mount-HomeDir($dstDir) {
     $files_map = $files_src | Resolve-Path -Relative |% { @{ src = $_; dst = (Join-Path -Path $dstDir -ChildPath ($_ -replace "^.[\\\/]home[\\\/]","")) } }
 
     foreach ($file in $files_map) {
-        $src = $file.src
+        $src = $file.src | Resolve-Path
         $dst = $file.dst
         New-Item -ItemType HardLink -Force -Path $dst -Target $src
     }
@@ -25,7 +25,7 @@ function Mount-PowerShellProfiles($dstDir) {
     $files_map = $files_src | Resolve-Path -Relative |% { @{ src = $_; dst = (Join-Path -Path $dstDir -ChildPath ($_ -replace "^.[\\\/]PowerShell_Profiles[\\\/]","")) } }
 
     foreach ($file in $files_map) {
-        $src = $file.src
+        $src = $file.src | Resolve-Path
         $dst = $file.dst
         New-Item -ItemType HardLink -Force -Path $dst -Target $src
     }
@@ -33,7 +33,7 @@ function Mount-PowerShellProfiles($dstDir) {
 
 function Mount-PowerShellProfilesOneDrive {
     $profile_src = Get-ChildItem -File "$PSScriptRoot\PowerShell_Profiles\Profile.ps1"
-    $profile_dst = Resolve-Path "$($HOME)\OneDrive - Microsoft\Documents\WindowsPowerShell\profile.ps1"
+    $profile_dst = "$($HOME)\OneDrive - Microsoft\Documents\WindowsPowerShell\profile.ps1"
     New-Item -ItemType HardLink -Force -Path $profile_dst -Target $profile_src
 }
 
@@ -66,4 +66,4 @@ Mount-DotFiles
 Pop-Location
 
 Write-Host "Press any key to exit..."
-$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
