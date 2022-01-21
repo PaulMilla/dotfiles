@@ -5,6 +5,11 @@ Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib
 Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-CMU.psm1" -ArgumentList @("$gitDir\OlkDataApps")
 Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-Cosmos.psm1"
 
+# If msbuild isn't in our PATH let's try to create an alias for it
+if (!(Get-Command msbuild -ErrorAction SilentlyContinue)) {
+    New-Alias msbuild -Value "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\bin\msbuild.exe"
+}
+
 ${function:cd-Git} = { cd "$gitDir" }
 ${function:cd-Experimentation} = { cd "$gitDir\CTExperimentation" }
 ${function:cd-CMU} = { cd "$gitDir\OlkDataApps\sources\dev\CalendarMetadataUploaderV2" }
