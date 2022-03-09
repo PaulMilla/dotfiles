@@ -13,3 +13,9 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
+
+# VS Code for some reason maps ctrl+backspace to ctrl+w, and when we try and ctrl+backspace
+# in the VS Code terminal we instead get the characters ^W
+if ($env:TERM_PROGRAM -eq "vscode") {
+  Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
+}
