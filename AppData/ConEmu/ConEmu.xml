@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2021-12-16 16:39:44" build="210912">
+		<key name=".Vanilla" modified="2022-07-27 11:47:23" build="220418">
 			<value name="Language" type="string" data="en"/>
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
@@ -146,11 +146,11 @@
 			<value name="Cascaded" type="hex" data="01"/>
 			<value name="IntegralSize" type="hex" data="00"/>
 			<value name="WindowMode" type="dword" data="0000051f"/>
-			<value name="ConWnd X" type="long" data="1047"/>
+			<value name="ConWnd X" type="long" data="255"/>
 			<value name="ConWnd Y" type="long" data="0"/>
-			<value name="LastMonitor" type="string" data="0,0,3440,1392"/>
-			<value name="ConWnd Width" type="dword" data="000000a7"/>
-			<value name="ConWnd Height" type="dword" data="00000019"/>
+			<value name="LastMonitor" type="string" data="0,0,2560,1392"/>
+			<value name="ConWnd Width" type="dword" data="000000ff"/>
+			<value name="ConWnd Height" type="dword" data="0000001e"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="QuakeStyle" type="hex" data="01"/>
 			<value name="Restore2ActiveMon" type="hex" data="00"/>

@@ -1,9 +1,16 @@
 # Work-Specific profile (currently @ Microsoft)
 
 $gitDir = "C:\git"
-Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-TDS.psm1"
-Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-CMU.psm1" -ArgumentList @("$gitDir\OlkDataApps")
-Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-Cosmos.psm1"
+if (Test-Path "$gitDir\PowerShell-Libs\")
+{
+    Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-TDS.psm1"
+    Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-CMU.psm1" -ArgumentList @("$gitDir\OlkDataApps")
+    Import-Module -Force -DisableNameChecking -Name "$gitDir\PowerShell-Libs\src\lib-Cosmos.psm1"
+}
+else {
+    Write-Warning "Missing additional PowerShell-Libs under git dir '$gitDir'"
+    Write-Warning "Consider downloading it from https://ctgain.visualstudio.com/CT%20GAIN/_git/PowerShell-Libs"
+}
 
 # If msbuild isn't in our PATH let's try to create an alias for it
 if (!(Get-Command msbuild -ErrorAction SilentlyContinue)) {
