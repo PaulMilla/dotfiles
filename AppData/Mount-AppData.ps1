@@ -26,8 +26,9 @@ function Mount-AppData() {
 
     ## Visual Studio Code
     ## https://vscode.readthedocs.io/en/latest/getstarted/settings/#settings-file-locations
-    New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\keybindings.json" -Target "$PSScriptRoot\Code\User\keybindings.json"
-    New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\settings.json" -Target "$PSScriptRoot\Code\User\settings.json"
+    ## Removing for now since VS Code has it's own way of syncing settings files
+    #New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\keybindings.json" -Target "$PSScriptRoot\Code\User\keybindings.json"
+    #New-Item -ItemType HardLink -Force -Path "$appData_roaming\Code\User\settings.json" -Target "$PSScriptRoot\Code\User\settings.json"
 
     ## ConEmu
     New-Item -ItemType HardLink -Force -Path "$appData_roaming\ConEmu.xml" -Target "$PSScriptRoot\ConEmu\ConEmu.xml"

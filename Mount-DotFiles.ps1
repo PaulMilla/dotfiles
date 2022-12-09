@@ -31,12 +31,6 @@ function Mount-PowerShellProfiles($dstDir) {
     }
 }
 
-function Mount-PowerShellProfilesOneDrive {
-    $profile_src = Get-ChildItem -File "$PSScriptRoot\PowerShell_Profiles\Profile.ps1"
-    $profile_dst = "$($HOME)\OneDrive - Microsoft\Documents\WindowsPowerShell\profile.ps1"
-    New-Item -ItemType HardLink -Force -Path $profile_dst -Target $profile_src
-}
-
 function Mount-DotFiles() {
     ## PowerShell 5.X and below was windows-only and had its profile under 'WindowsPowerShell'
     ## PowerShell 6.X (core) and above changed profile dir to be just 'PowerShell'
@@ -55,9 +49,6 @@ function Mount-DotFiles() {
 
     Write-Host -ForegroundColor Yellow "`nLinking PowerShell 6.X (core) profiles..."
     Mount-PowerShellProfiles -dstDir $profileDir_ps6
-
-    Write-Host -ForegroundColor Yellow "`nLinking PowerShell OneDrive profiles..."
-    Mount-PowerShellProfilesOneDrive
 }
 
 # Created function so as to not pollute global namespace
