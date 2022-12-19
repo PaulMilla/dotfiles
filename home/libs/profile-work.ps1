@@ -13,8 +13,16 @@ else {
 }
 
 # If msbuild isn't in our PATH let's try to create an alias for it
-if (!(Get-Command msbuild -ErrorAction SilentlyContinue) && Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\bin\msbuild.exe") {
-    New-Alias msbuild -Value "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\bin\msbuild.exe"
+if (!(Get-Command msbuild -ErrorAction SilentlyContinue)) {
+    $msbuild2019 = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\bin\msbuild.exe"
+    $msbuild2022 = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\amd64\MSBuild.exe"
+
+    if (Test-Path $msbuild2019) {
+        New-Alias msbuild -Value $msbuild2019
+    }
+    if (Test-Path $msbuild2022) {
+        New-Alias msbuild -Value $msbuild2022
+    }
 }
 
 ${function:cd-Git} = { cd "$gitDir" }
