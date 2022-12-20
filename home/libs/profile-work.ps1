@@ -29,6 +29,8 @@ ${function:cd-Git} = { cd "$gitDir" }
 ${function:cd-Experimentation} = { cd "$gitDir\CTExperimentation" }
 ${function:cd-CMU} = { cd "$gitDir\OlkDataApps\sources\dev\CalendarMetadataUploaderV2" }
 ${function:cd-ADF} = { cd "$gitDir\CTData\Cosmos\ADF" }
+${function:cd-PlacesCompute} = { cd "$gitDir\EuclidMelbourne\sources\dev\Projects\xplat\placesComputePySpark" }
+${function:cd-EWS} = { cd "$gitDir\EuclidMelbourne\sources\dev" }
 ${function:cd-OutlookML} = { cd "$gitDir\TEE\TEEGit\Offline\OutlookML\Onboarding\python"; $user = "pamilla";  Write-Host "To activate environment: conda activate outlookml" }
 
 function powerline() {
