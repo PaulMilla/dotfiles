@@ -31,7 +31,9 @@ ${function:cd-CMU} = { cd "$gitDir\OlkDataApps\sources\dev\CalendarMetadataUploa
 ${function:cd-ADF} = { cd "$gitDir\CTData\Cosmos\ADF" }
 ${function:cd-PlacesCompute} = { cd "$gitDir\EuclidMelbourne\sources\dev\Projects\xplat\placesComputePySpark" }
 ${function:cd-EWS} = { cd "$gitDir\EuclidMelbourne\sources\dev" }
+${function:cd-OutlokServices} = { cd "$gitDir\outlookweb\services" }
 ${function:cd-OutlookML} = { cd "$gitDir\TEE\TEEGit\Offline\OutlookML\Onboarding\python"; $user = "pamilla";  Write-Host "To activate environment: conda activate outlookml" }
+Set-Alias vs2022 "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe"
 
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow
