@@ -35,6 +35,15 @@ ${function:cd-OutlokServices} = { cd "$gitDir\outlookweb\services" }
 ${function:cd-OutlookML} = { cd "$gitDir\TEE\TEEGit\Offline\OutlookML\Onboarding\python"; $user = "pamilla";  Write-Host "To activate environment: conda activate outlookml" }
 Set-Alias vs2022 "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe"
 
+
+function install-TdsVpn() {
+    Write-Host "Installing Azure VPN Client from msstore..."
+    winget install --name "Azure VPN Client"
+
+    Write-Host "Downloading vpnclient configs from https://aka.ms/tds/vpnclient and install"
+    #Invoke-WebRequest -URI "https://microsoft.sharepoint-df.com/teams/o365esiweb/_layouts/15/download.aspx?UniqueId=adb4e975-aedf-4443-98da-97af65cea0f3" -OutFile M365_EFDC_VPN_Client.exe
+}
+
 function powerline() {
     # For some reason 'opening a cmd shell > initGriffin > powershell' causes posh-git to load REALLY slow
     # so instead we'll define our prompt in this `powerline` function to be applied whenever it's safe to do so
