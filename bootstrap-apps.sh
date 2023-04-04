@@ -23,6 +23,7 @@ brew install exa
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# Install better fonts
 brew tap homebrew/cask-fonts
 brew update
 brew install --cask font-hack-nerd-font
