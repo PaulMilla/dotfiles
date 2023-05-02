@@ -7,13 +7,15 @@
     dog = log --decorate --oneline --graph -n 20
     # View the current working tree status using the short format
     s = status -s
-    st = status -s
+    st = status
     # View branch information
     br = branch
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
     # `git di $number` shows the diff between the state `$number` revisions ago and the current state
     di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+    # Diff using delta as the difftool
+    dt = difftool --tool=vscode
     # Merge using vscode as the mergetool
     mt = mergetool --tool=vscode
     # Pull in remote changes for the current repository and all its submodules
@@ -57,6 +59,8 @@
     uncommit = reset --soft HEAD^
     unstage = reset HEAD --
 	root = rev-parse --show-toplevel
+    # Ammend the most recent commit message
+    ammend = commit --amend
 
 [apply]
     # Detect whitespace errors when applying a patch
@@ -79,6 +83,8 @@
 
     fsmonitor=true
 
+    pager = delta # Requires delta to be installed
+
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
@@ -87,11 +93,15 @@
     # instead set an alias for it
     #tool = vscode
 
+    conflictstyle = diff3 # Use diff3 style merge conflicts
+
+
 [mergetool "vscode"]
     cmd = code --wait $MERGED
 
 [diff]
     tool = vscode
+    colorMoved = default
 
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
@@ -143,9 +153,28 @@
 
 [credential]
     helper = manager
+	helper = /usr/local/share/gcm-core/git-credential-manager
+	msauthHelper = 
 [user]
     name = Paul Milla
     email = pamilla@microsoft.com
 [fetch]
     # When doing a fetch or pull delete local branches that aren't on the server anymore
     prune = true
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+[merge "kintsugi"]
+	name = Kintsugi driver
+	driver = kintsugi driver %O %A %B %P
