@@ -120,6 +120,7 @@ set -o vi
 
 # Requires chruby to be installed - Run before aliases
 source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
 
 alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
