@@ -19,6 +19,10 @@ brew install maccy
 brew install --cask raycast
 brew install --cask rectangle
 brew install exa
+brew install --cask powershell
+brew install --cask postman
+brew install git-delta
+brew install bat
 
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

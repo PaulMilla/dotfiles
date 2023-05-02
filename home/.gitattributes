@@ -1,1 +1,3 @@
-#
+# Use Kintsugi to merge Xcode project files
+# https://github.com/Lightricks/Kintsugi
+*.pbxproj merge=kintsugi
