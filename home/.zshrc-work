@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+alias cd-places='cd $HOME/git/MicrosoftPlacesMobile'
+alias open-places='open $HOME/git/MicrosoftPlacesMobile/ios/places.xcworkspace'

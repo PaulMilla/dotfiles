@@ -109,6 +109,10 @@ fi
 # Use vim-like movement keys
 set -o vi
 
+# Requires chruby to be installed - Run before aliases
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -118,10 +122,6 @@ set -o vi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Requires chruby to be installed - Run before aliases
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
-
 alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
 
@@ -130,3 +130,6 @@ alias cat='bat'
 
 # Alias anonymous functions to allow for arguments. Only works with zsh
 alias tail-f='(){ tail -f $1 | bat --paging=never -l log ;}'
+
+# Source in aliases related to work
+source "${0:a:h}/.zshrc-work"
