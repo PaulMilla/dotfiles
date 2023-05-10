@@ -95,6 +95,8 @@
 
     conflictstyle = diff3 # Use diff3 style merge conflicts
 
+[mergetool]
+	keepBackup = false
 
 [mergetool "vscode"]
     cmd = code --wait $MERGED
