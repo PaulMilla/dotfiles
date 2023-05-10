@@ -132,4 +132,5 @@ alias cat='bat'
 alias tail-f='(){ tail -f $1 | bat --paging=never -l log ;}'
 
 # Source in aliases related to work
-source "${0:a:h}/.zshrc-work"
+
+source "$HOME/.zshrc-work"
