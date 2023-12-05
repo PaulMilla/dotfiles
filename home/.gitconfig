@@ -2,6 +2,8 @@
     # List current aliases
     alias = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
     aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
+    # Edit global config
+    edit-config = config --global --edit
     # View abbreviated SHA, description, and history graph of the latest 20 commits
     l = log --pretty=oneline -n 20 --graph --abbrev-commit
     dog = log --decorate --oneline --graph -n 20
@@ -83,6 +85,9 @@
 
     fsmonitor=true
 
+    # use code to edit, and wait for results
+	editor = code --wait
+
     pager = delta # Requires delta to be installed
 
 [merge]
@@ -91,7 +96,7 @@
     # If we set a default merge tool then using the diff viewer in VS will instead try and open it in the merge tool
     # Since I like using the VS merge tool when in VS, but VSCode when in CLI it's better to not set a default and
     # instead set an alias for it
-    #tool = vscode
+    tool = vscode
 
     conflictstyle = diff3 # Use diff3 style merge conflicts
 
@@ -165,7 +170,8 @@
     prune = true
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[filter "lfs"]
+
+ [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
@@ -177,6 +183,7 @@
 [delta]
     navigate = true    # use n and N to move between diff sections
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    
 [merge "kintsugi"]
 	name = Kintsugi driver
 	driver = kintsugi driver %O %A %B %P

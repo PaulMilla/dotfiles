@@ -1,10 +1,20 @@
 #!/bin/zsh
 
-alias cd-places='cd $HOME/git/MicrosoftPlacesMobile'
-alias open-places='open $HOME/git/MicrosoftPlacesMobile/ios/places.xcworkspace'
+export PLACES_GIT_ROOT="$HOME/git/MicrosoftPlacesMobile"
+
+alias cd-places="cd $PLACES_GIT_ROOT"
+alias open-places="open $PLACES_GIT_ROOT/ios/places.xcworkspace"
+
+alias places-open="open $PLACES_GIT_ROOT/ios/places.xcworkspace"
+alias places-setup="${PLACES_GIT_ROOT}/ios/scripts/setupProject.sh"
+alias places-sourcery="${PLACES_GIT_ROOT}/ios/scripts/generateMocks.sh"
+alias places-signin="~/Downloads/SimulatorSignInCompanionApp/SimulatorSignInCompanion &"
 
 # Torus client for Mac installed via:
 # https://docs.substrate.microsoft.net/docs/Security/Torus/Torus-client/Install-Torus-Client.html?uid=install-torus-client
 alias           torus='export DYLD_FALLBACK_LIBRARY_PATH="/Library/Scripts/Torus/Mac/lib:/lib:/usr/local/lib:/usr/lib:";/usr/local/bin/pwsh -NoLogo -NoExit -File /Library/Scripts/Torus/TorusClient.ps1'
 alias     TorusClient='export DYLD_FALLBACK_LIBRARY_PATH="/Library/Scripts/Torus/Mac/lib:/lib:/usr/local/lib:/usr/lib:";/usr/local/bin/pwsh -NoLogo -NoExit -File /Library/Scripts/Torus/TorusClient.ps1'
 alias TorusClientSudo='export DYLD_FALLBACK_LIBRARY_PATH="/Library/Scripts/Torus/Mac/lib:/lib:/usr/local/lib:/usr/lib:";sudo /usr/local/bin/pwsh -NoLogo -NoExit -File /Library/Scripts/Torus/TorusClient.ps1'
+
+# Alertus is annoying
+alias kill-alertus='sudo pkill -9 "Alertus" && sudo rm -rf "/Applications/Alertus Desktop.app" && echo "Alertus is dead. Long live Alertus."'

@@ -99,8 +99,8 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
   export EDITOR="code"
-  export GIT_EDITOR="code"
   export VISUAL="code"
+  # export GIT_EDITOR="code" # This should be set in git config settings
 fi
 
 # Compilation flags
@@ -130,6 +130,8 @@ alias cat='bat'
 
 # Alias anonymous functions to allow for arguments. Only works with zsh
 alias tail-f='(){ tail -f $1 | bat --paging=never -l log ;}'
+
+alias git-prune-branches='git branch --merged | egrep -v "(^\*|master|dev|main)" | xargs git branch -d'
 
 # Source in aliases related to work
 
