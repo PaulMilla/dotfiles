@@ -136,3 +136,6 @@ alias git-prune-branches='git branch --merged | egrep -v "(^\*|master|dev|main)"
 # Source in aliases related to work
 
 source "$HOME/.zshrc-work"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

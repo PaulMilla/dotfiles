@@ -23,9 +23,13 @@ brew install --cask powershell
 brew install --cask postman
 brew install git-delta
 brew install bat
+brew install chruby
 
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Install PowerLevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # Install better fonts
 brew tap homebrew/cask-fonts
