@@ -24,6 +24,8 @@ brew install --cask postman
 brew install git-delta
 brew install bat
 brew install chruby
+brew install --cask scroll-reverser
+brew install --cask shottr
 
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
