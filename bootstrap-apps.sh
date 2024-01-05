@@ -26,6 +26,9 @@ brew install bat
 brew install chruby
 brew install --cask scroll-reverser
 brew install --cask shottr
+brew install --cask openinterminal
+brew install --cask openinterminal-lite
+brew install --cask openineditor-lite
 
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
