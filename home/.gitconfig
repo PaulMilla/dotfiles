@@ -57,6 +57,8 @@
     fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
     # Remove branches that have already been merged with master
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    rm-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    rm-merged-main = git branch --merged origin/main | grep -v main | xargs git branch -d
     # Undo Commit; leaves files. Only for non-public commits
     uncommit = reset --soft HEAD^
     unstage = reset HEAD --
@@ -83,7 +85,7 @@
     # https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
 
-    fsmonitor=true
+    fsmonitor=false
 
     # use code to edit, and wait for results
 	editor = code --wait
@@ -150,6 +152,8 @@
     insteadOf = "gist:"
 
 [push]
+    # setup tracking when pushing to a new branch
+    autoSetupRemote = true
     # Always push only the current branch to the upstream branch
     default = current
 
