@@ -110,8 +110,8 @@ fi
 set -o vi
 
 # Requires chruby to be installed - Run before aliases
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
+source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh # Or run `brew info chruby` to find out installed directory
+source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh

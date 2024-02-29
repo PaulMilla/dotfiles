@@ -18,7 +18,6 @@ brew install zsh
 brew install maccy
 brew install --cask raycast
 brew install --cask rectangle
-brew install exa
 brew install --cask powershell
 brew install --cask postman
 brew install git-delta
@@ -26,6 +25,7 @@ brew install bat
 brew install chruby
 brew install --cask scroll-reverser
 brew install --cask shottr
+# brew install exa # deprecated
 brew install --cask openinterminal
 brew install --cask openinterminal-lite
 brew install --cask openineditor-lite
