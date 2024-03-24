@@ -55,7 +55,8 @@ $RECYCLE.BIN/
 *.userprefs
 
 # Build results
-[Dd]ebug/
+# We use a normal folder called 'Debug' in MSFT for normal code that should be committed
+#[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/

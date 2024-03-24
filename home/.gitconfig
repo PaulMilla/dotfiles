@@ -12,6 +12,8 @@
     st = status
     # View branch information
     br = branch
+    br-list = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))' 
+    brls = br-list
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
     # `git di $number` shows the diff between the state `$number` revisions ago and the current state

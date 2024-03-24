@@ -29,6 +29,7 @@ brew install --cask shottr
 brew install --cask openinterminal
 brew install --cask openinterminal-lite
 brew install --cask openineditor-lite
+brew install --cask sensiblesidebuttons
 
 # Install Oh-My-Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

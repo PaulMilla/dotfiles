@@ -122,8 +122,9 @@ source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
-alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
+# exa has been deprecated
+# alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
+# alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
 
 # Requires bat to be installed
 alias cat='bat'
