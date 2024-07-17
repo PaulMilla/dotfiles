@@ -135,6 +135,8 @@ alias tail-f='(){ tail -f $1 | bat --paging=never -l log ;}'
 
 alias git-prune-branches='git branch --merged | egrep -v "(^\*|master|dev|main)" | xargs git branch -d'
 
+alias python=python3
+
 # Source in aliases related to work
 
 source "$HOME/.zshrc-work"
@@ -143,3 +145,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Add our lib directory to the path
 export PATH="$PATH:$HOME/lib/"
+
+source ~/.torusrc

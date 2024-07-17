@@ -37,6 +37,10 @@ fi
 # if we want to provide a dSYM, we will need to add another parameter when calling `symbolicatecrash`
 (set -x; DEVELOPER_DIR="$xcodeDevDir" "$symbolicatecrash" -v "$crashFile" > "$crashFileName-symbolicated.crash")
 
+echo "\nThis uses debugging symbols from the dSYMs that are available in XCode.
+To add more dSYMs, you can follow the guide here to download and install the msplaces.xcarchive file from ADO:
+https://outlookweb.visualstudio.com/MicrosoftPlaces/_wiki/wikis/Microsoft%20Places%20Mobile/10487/Symbolicating-a-Crash-File"
+
 output="File available at: $(realpath "$crashFileName-symbolicated.crash")"
 # print outPath with yellow foreground color and reset color
->&2 echo -e "\n\033[33m$output\033[0m"
+echo "\n\033[33m$output\033[0m"

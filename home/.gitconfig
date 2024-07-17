@@ -67,6 +67,9 @@
 	root = rev-parse --show-toplevel
     # Ammend the most recent commit message
     ammend = commit --amend
+    # Show recent branches with commit info
+    # https://stackoverflow.com/a/2013589
+    recentb = "!r() { refbranch=\"${1:-origin/main}\" count=${2:-20}; git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count} | while read line; do branch=$(echo \"$line\" | awk 'BEGIN { FS = \"|\" }; { print $1 }' | tr -d '*'); ahead=$(git rev-list --count \"${refbranch}..${branch}\"); behind=$(git rev-list --count \"${branch}..${refbranch}\"); colorline=$(echo \"$line\" | sed 's/^[^|]*|//'); echo \"$ahead|$behind|$colorline\" | awk -F'|' -vOFS='|' '{$5=substr($5,1,70)}1' ; done | ( echo \"ahead|behind|branch|lastcommit|message|author\n\" && cat) | column -ts'|';}; r"
 
 [apply]
     # Detect whitespace errors when applying a patch
