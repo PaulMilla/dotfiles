@@ -383,3 +383,9 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/windows,visualstudio,visualstudiocode
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore profaw files - aka code coverage files from CleanMyMac
+*.profraw
