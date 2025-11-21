@@ -5,16 +5,18 @@
 # Source libs
 if (Test-Path "$home\libs\profile-functions.ps1") {. $home\libs\profile-functions.ps1}
 if (Test-Path "$home\libs\profile-aliases.ps1") {. $home\libs\profile-aliases.ps1}
-if (Test-Path "$home\libs\profile-work.ps1") {. $home\libs\profile-work.ps1}
+# if (Test-Path "$home\libs\profile-work.ps1") {. $home\libs\profile-work.ps1}
+if (Test-Path "$home\libs\profile-azure.ps1") {. $home\libs\profile-azure.ps1}
 
 # 3rd-party imports
 if (($null -ne (Get-Command git -ErrorAction SilentlyContinue)) -and ($null -ne (Get-Module -ListAvailable Posh-Git -ErrorAction SilentlyContinue))) {
   # Posh-Git messes up cmd > initGriffin > powershell
-  #Import-Module Posh-Git
+  Import-Module Posh-Git
 }
 
 # Enable vi mode via PSReadline
 Set-PSReadlineOption -EditMode vi
+Set-PSReadLineOption -ViModeIndicator Cursor
 
 # Exports
 ############
@@ -35,4 +37,11 @@ if ($env:PATH -contains $libsPath) {
 
 if (Test-Path "$home\libs\profile-extras.ps1") {
     . $home\libs\profile-extras.ps1
+}
+
+# Init Oh-My-Posh if available
+if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
+  # For all themes see: https://ohmyposh.dev/docs/themes
+  oh-my-posh init pwsh --config powerlevel10k_rainbow | Invoke-Expression
+  # oh-my-posh init pwsh --config paradox | Invoke-Expression
 }
