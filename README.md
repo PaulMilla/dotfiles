@@ -4,14 +4,9 @@
 
 A collection of dotfiles for configuration and settings for various apps/tools.
 
-Since this has a submodule you should clone with the --recursive flag
-
 ```bash
-# HTTPS auth
-git clone --recursive https://github.com/PaulMilla/dotfiles.git
-
-# SSH auth
-git clone --recursive git@github.com:PaulMilla/dotfiles.git
+git clone https://github.com/PaulMilla/dotfiles.git # HTTPS auth
+git clone git@github.com:PaulMilla/dotfiles.git     # SSH auth
 ```
 
 The master branch holds the most generic and cross-platform settings while long-lived branches hold more OS-specific settings.
@@ -19,7 +14,26 @@ The master branch holds the most generic and cross-platform settings while long-
 To install from PowerShell:
 
 ```posh
-& .\bootstrap.ps1
+& .\Mount-DotFiles.ps1
+```
+
+## Making changes
+
+If you are a future me try to make changes under my personal github account (PaulMilla)
+
+To do this inside a specific repo first navigate under the repo folder (/github/dotfiles)
+and then set the name + email like so:
+
+```sh
+git config user.name "Paul Milla"
+git config user.email "PaulMilla@users.noreply.github.com"
+# Email is set using github noreply emails to enable privacy
+```
+
+If there is already some commits under the wrong git account you can amend the author like so:
+
+```sh
+git commit --amend --reset-author --no-edit
 ```
 
 ## Bootstrap Scripts
