@@ -132,7 +132,9 @@
     helper = manager
 [user]
     name = Paul Milla
-    # email = pamilla@microsoft.com
+    # Better to set this in zshrc or pwsh profile 
+    # GIT_AUTHOR_EMAIL=your_email@abc.example
+    # email = PaulMilla@users.noreply.github.com
 [fetch]
     # When doing a fetch or pull delete local branches that aren't on the server anymore
     prune = true
