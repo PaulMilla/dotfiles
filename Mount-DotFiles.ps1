@@ -1,10 +1,13 @@
 # Check if we're running in a window with Administrator privileges - needed to make hard links
+# Though we shouldn't need this as long as we're only creating links in user-writable locations and developer mode is turned on in windows
 # If not then create a new window and execute
-If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
-{
-  # Relaunch as an elevated process:
-  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
-  exit
+function Test-Elevated() {
+    If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+    {
+    # Relaunch as an elevated process:
+    Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+    exit
+    }
 }
 
 function Mount-HomeDir($dstDir) {
@@ -52,9 +55,14 @@ function Mount-DotFiles() {
 }
 
 # Created function so as to not pollute global namespace
+# Test-Elevated
 Push-Location $PSScriptRoot
 Mount-DotFiles
 Pop-Location
 
 Write-Host "Press any key to exit..."
 $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
+
+#[user]
+#    name = Paul Milla
+#    email = millap@legal.regn.net

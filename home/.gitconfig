@@ -132,7 +132,7 @@
     helper = manager
 [user]
     name = Paul Milla
-    email = pamilla@microsoft.com
+    # email = pamilla@microsoft.com
 [fetch]
     # When doing a fetch or pull delete local branches that aren't on the server anymore
     prune = true

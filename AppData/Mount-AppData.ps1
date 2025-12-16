@@ -1,12 +1,14 @@
 # Check if we're running in a window with Administrator privileges
+# Though we shouldn't need this as long as we're only creating links in user-writable locations and developer mode is turned on in windows
 # If not then create a new window and execute
-If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
-{
-  # Relaunch as an elevated process:
-  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
-  exit
+function Test-Elevated() {
+    If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+    {
+    # Relaunch as an elevated process:
+    Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+    exit
+    }
 }
-
 function Mount-AppData() {
     # AppData
     #########
@@ -45,6 +47,7 @@ function Mount-AppData() {
 }
 
 # Created function so as to not pollute global namespace
+# Test-Elevated
 Push-Location $PSScriptRoot
 Mount-AppData
 Pop-Location
